@@ -5,14 +5,22 @@ import { useParams } from "react-router-dom";
 const MovieDetail = () => {
     const { id } = useParams();
     const [movieDetail, setMovieDetail] = useState({})
+    const [movieVideos, setMovieVideos] = useState([])
 
     useEffect(() => {
         getMovieDetails(id)
     }, [])
 
     const getMovieDetails = (id) => {
-        fetch('movies/movie_details?id=' + id).then((response) => response.json()).then((data) => {
+        fetch('movies/movie-details?id=' + id).then((response) => response.json()).then((data) => {
             setMovieDetail(data);
+            getMovieVideos(id)
+        })
+    }
+
+    const getMovieVideos = (id) => {
+        fetch('movies/movie-videos?id=' + id).then((response) => response.json()).then((data) => {
+            setMovieVideos(data);
         })
     }
 
@@ -55,6 +63,13 @@ const MovieDetail = () => {
                                 <li><i className="fa fa-check text-success"></i>Designed to foster easy portability</li>
                                 <li><i className="fa fa-check text-success"></i>Perfect furniture to flaunt your wonderful collectibles</li>
                             </ul>
+                            <div id="carouselExampleSlidesOnly" class="row">
+                                {movieVideos.map((movie_video, index) => <>
+                                    <div className="col-md-6 p-1">
+                                        <iframe class="embed-responsive-item" src={"https://www.youtube.com/embed/" + movie_video.key}></iframe>
+                                    </div>
+                                </>)}
+                            </div>
                         </div>
 
                     </div>

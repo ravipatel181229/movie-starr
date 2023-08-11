@@ -5,7 +5,6 @@ using Microsoft.EntityFrameworkCore;
 using MovieStarr.Common;
 using MovieStarr.Data;
 using MovieStarr.Models;
-using static MovieStarr.Common.SettingsApp;
 
 var builder = WebApplication.CreateBuilder(args);
 

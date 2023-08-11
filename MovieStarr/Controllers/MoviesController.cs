@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MovieStarr.Common;
 using MovieStarr.Models.Movies;
-using static MovieStarr.Common.SettingsApp;
 
 namespace MovieStarr.Controllers
 {
@@ -28,7 +27,7 @@ namespace MovieStarr.Controllers
 
         // GET: Genre List
         [HttpGet]
-        [Route("genre_list")]
+        [Route("genre-list")]
         public IEnumerable<Genre> AllGenre()
         {
             List<Genre> res = _apiService.GetAllGenre();
@@ -52,7 +51,7 @@ namespace MovieStarr.Controllers
         }
 
         [HttpGet]
-        [Route("top_rated")]
+        [Route("rated")]
         public IEnumerable<MoviesList> TopRated()
         {
             List<MoviesList> res = _apiService.GetTopRated().results;
@@ -60,11 +59,20 @@ namespace MovieStarr.Controllers
         }
 
         [HttpGet]
-        [Route("movie_details")]
+        [Route("movie-details")]
         public MovieDetails MovieDetails()
         {
             int id = Convert.ToInt32(HttpContext.Request.Query["id"]);
             MovieDetails res = _apiService.GetMovieDetails(id);
+            return res;
+        }
+
+        [HttpGet]
+        [Route("movie-videos")]
+        public IEnumerable<MovieVideos> MovieVideos()
+        {
+            int id = Convert.ToInt32(HttpContext.Request.Query["id"]);
+            List<MovieVideos> res = _apiService.GetMovieVideos(id);
             return res;
         }
     }

@@ -6,7 +6,7 @@ using MovieStarr.Models;
 using Newtonsoft.Json;
 using MovieStarr.Models.Movies;
 using Microsoft.Extensions.Options;
-using static MovieStarr.Common.SettingsApp;
+using MovieStarr.Models.TV;
 
 namespace MovieStarr.Common
 {
@@ -108,6 +108,107 @@ namespace MovieStarr.Common
             var response = client.Get(request);
 
             res = JsonConvert.DeserializeObject<MovieDetails>(response.Content);
+            return res;
+        }
+
+        public List<MovieVideos> GetMovieVideos(int id)
+        {
+            var options = new RestClientOptions("https://api.themoviedb.org/3/movie/" + id + "/videos");
+            var client = new RestClient(options);
+            var request = new RestRequest("");
+            request.AddHeader("accept", "application/json");
+            request.AddHeader("Authorization", "Bearer " + token);
+            var response = client.Get(request);
+
+            var res = JsonConvert.DeserializeObject<MovieVideoModel>(response.Content);
+            return res.results;
+        }
+
+
+
+
+        ////////// TV
+        ///
+        public List<Genre> GetAllSeriesGenre()
+        {
+            var options = new RestClientOptions("https://api.themoviedb.org/3/genre/tv/list");
+            var client = new RestClient(options);
+            var request = new RestRequest("");
+            request.AddHeader("accept", "application/json");
+            request.AddHeader("Authorization", "Bearer " + token);
+            var response = client.Get(request);
+
+            var result = JsonConvert.DeserializeObject<GenreModel>(response.Content);
+
+            return result.genres;
+        }
+        public List<TVSeries> GetOnTheAirSeries()
+        {
+            var options = new RestClientOptions("https://api.themoviedb.org/3/tv/on_the_air");
+            var client = new RestClient(options);
+            var request = new RestRequest("");
+            request.AddHeader("accept", "application/json");
+            request.AddHeader("Authorization", "Bearer " + token);
+            var response = client.Get(request);
+
+            var res = JsonConvert.DeserializeObject<TVSeriesModel>(response.Content);
+            return res.results;
+        }
+        public List<TVSeries> GetArrivingTodaySeries()
+        {
+            var options = new RestClientOptions("https://api.themoviedb.org/3/tv/airing_today");
+            var client = new RestClient(options);
+            var request = new RestRequest("");
+            request.AddHeader("accept", "application/json");
+            request.AddHeader("Authorization", "Bearer " + token);
+            var response = client.Get(request);
+
+            var res = JsonConvert.DeserializeObject<TVSeriesModel>(response.Content);
+            return res.results;
+        }
+        public List<TVSeries> GetPopularSeries()
+        {
+            var options = new RestClientOptions("https://api.themoviedb.org/3/tv/popular");
+            var client = new RestClient(options);
+            var request = new RestRequest("");
+            request.AddHeader("accept", "application/json");
+            request.AddHeader("Authorization", "Bearer " + token);
+            var response = client.Get(request);
+
+            var res = JsonConvert.DeserializeObject<TVSeriesModel>(response.Content);
+            return res.results;
+        }
+        public List<TVSeries> GetTopRatedSeries()
+        {
+            var options = new RestClientOptions("https://api.themoviedb.org/3/tv/top_rated");
+            var client = new RestClient(options);
+            var request = new RestRequest("");
+            request.AddHeader("accept", "application/json");
+            request.AddHeader("Authorization", "Bearer " + token);
+            var response = client.Get(request);
+
+            var res = JsonConvert.DeserializeObject<TVSeriesModel>(response.Content);
+            return res.results;
+        }
+
+        public TVDetails GetTVDetails(int id)
+        {
+            TVDetails res = new TVDetails();
+
+            var options = new RestClientOptions("https://api.themoviedb.org/3/tv/" + id);
+            var client = new RestClient(options);
+            var request = new RestRequest("");
+            request.AddHeader("accept", "application/json");
+            request.AddHeader("Authorization", "Bearer " + token);
+            var response = client.Get(request);
+
+            try
+            {
+            res = JsonConvert.DeserializeObject<TVDetails>(response.Content);
+            }
+            catch(Exception ex) { 
+            string s=ex.Message;
+            }
             return res;
         }
     }

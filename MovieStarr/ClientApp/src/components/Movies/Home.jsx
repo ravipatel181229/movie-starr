@@ -22,7 +22,7 @@ const Home = () => {
 
     const getGenreList = () => {
         if (!lstGenre.length) {
-            fetch('movies/genre_list').then((response) => response.json()).then((responseJson) => {
+            fetch('movies/genre-list').then((response) => response.json()).then((responseJson) => {
                 console.log(responseJson);
                 setLstGenre(responseJson);
             })
@@ -53,7 +53,7 @@ const Home = () => {
 
     const topRatedMovies = () => {
         setActiveTab("TOP_RATED")
-        fetch('movies/top_rated').then((response) => response.json()).then((data) => {
+        fetch('movies/top-rated').then((response) => response.json()).then((data) => {
             setMovies(data);
         })
     }
