@@ -58,12 +58,7 @@ const TVDetail = () => {
                             <div class="progress"  >
                                 <div class="progress-bar bg-info" role="progressbar" style={{ width: tvDetail.vote_average * 10 + "%" }} aria-valuenow={tvDetail.vote_average} aria-valuemin="0" aria-valuemax="10"></div>
                             </div>
-                            <ul className="list-unstyled">
-                                <li><i className="fa fa-check text-success"></i>Sturdy structure</li>
-                                <li><i className="fa fa-check text-success"></i>Designed to foster easy portability</li>
-                                <li><i className="fa fa-check text-success"></i>Perfect furniture to flaunt your wonderful collectibles</li>
-                            </ul>
-                            <div class="row">
+                            <div class="row mt-2">
                                 {tvDetail.seasons && tvDetail.seasons.map((season, index) => <>
                                     <div className="col-md-3 p-1">
                                         {season.poster_path &&

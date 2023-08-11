@@ -75,5 +75,14 @@ namespace MovieStarr.Controllers
             List<MovieVideos> res = _apiService.GetMovieVideos(id);
             return res;
         }
+
+        [HttpGet]
+        [Route("movie-credits")]
+        public MovieCreditModel MovieCredits()
+        {
+            int id = Convert.ToInt32(HttpContext.Request.Query["id"]);
+            MovieCreditModel res = _apiService.GetMovieCredits(id);
+            return res;
+        }
     }
 }
