@@ -33,7 +33,7 @@ const TVDetail = () => {
                             <div className="white-box text-center"><img src={"http://image.tmdb.org/t/p/w500/" + tvDetail.poster_path} className="img-fluid " /></div>
                         </div>
                         <div className="col-lg-7 col-md-7 col-sm-6">
-                            <h2 className="box-title mt-2">{tvDetail.title}</h2>
+                            <h2 className="box-title mt-2">{tvDetail.name}</h2>
                             <small>{tvDetail.tagline}</small>
                             <p>{tvDetail.overview}</p>
                             <div className="mb-2">
@@ -69,7 +69,8 @@ const TVDetail = () => {
                                         {season.poster_path &&
                                             <img src={"http://image.tmdb.org/t/p/w500/" + season.poster_path} className="img-fluid" />
                                         }
-                                        <h3>{season.name}</h3>
+                                        <h4>{season.name}</h4>
+                                        <small>{season.air_date}</small>
                                         <p>Episodes: {season.episode_count}</p>
                                     </div>
                                 </>)}

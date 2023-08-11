@@ -85,7 +85,7 @@ const TVSeries = () => {
                             <div className="card" >
                                 <div className="card-body">
                                     <img className="card-img-top" src={"http://image.tmdb.org/t/p/w500/" + seriesItem.poster_path} />
-                                    <h5 className="card-title mt-2">{seriesItem.title}</h5>
+                                    <h5 className="card-title mt-2">{seriesItem.name}</h5>
                                     <span className="text-muted" style={{ float: "right" }}> {seriesItem.adult ? "A" : "U/A"}</span>
                                     <span> {seriesItem.release_date}</span>
                                     <p className="card-text text-muted">{seriesItem.overview}</p>
