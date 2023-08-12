@@ -51,7 +51,7 @@ namespace MovieStarr.Controllers
         }
 
         [HttpGet]
-        [Route("rated")]
+        [Route("top-rated")]
         public IEnumerable<MoviesList> TopRated()
         {
             List<MoviesList> res = _apiService.GetTopRated().results;

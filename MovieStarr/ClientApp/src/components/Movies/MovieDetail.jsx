@@ -1,6 +1,6 @@
 ﻿import React, { useEffect, useState } from 'react'
 import { useParams } from "react-router-dom";
-
+import blankProfile from '../../images/blank-profile.png';
 
 const MovieDetail = () => {
     const { id } = useParams();
@@ -75,7 +75,7 @@ const MovieDetail = () => {
                                                     movieCast.profile_path ?
                                                         <img src={"http://image.tmdb.org/t/p/w500/" + movieCast.profile_path} className="img-fluid rounded" />
                                                         :
-                                                        <img src="/blank-profile.png" className="img-fluid" />
+                                                        <img src={blankProfile} className="img-fluid" />
                                                 }
                                                 <h6>{movieCast.name} ({movieCast.known_for_department})</h6>
                                                 <strong className="text-muted">{movieCast.character}</strong>

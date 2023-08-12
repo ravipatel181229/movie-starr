@@ -25,7 +25,7 @@ namespace MovieStarr.Common
         {
             MovieModel res = new MovieModel();
 
-            var options = new RestClientOptions("https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1");
+            var options = new RestClientOptions("https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1&region=in");
             var client = new RestClient(options);
             var request = new RestRequest("");
             request.AddHeader("accept", "application/json");
