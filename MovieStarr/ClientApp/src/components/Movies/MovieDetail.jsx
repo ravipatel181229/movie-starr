@@ -7,6 +7,8 @@ const MovieDetail = () => {
     const [movieDetail, setMovieDetail] = useState({})
     const [movieVideos, setMovieVideos] = useState([])
     const [movieCredits, setMovieCredits] = useState([])
+    const [movieReviews, setMovieReviews] = useState({})
+    const [movieReviewPage, setMovieReviewPage] = useState(1)
 
     useEffect(() => {
         getMovieDetails(id)
@@ -16,6 +18,7 @@ const MovieDetail = () => {
         fetch('movies/movie-details?id=' + id).then((response) => response.json()).then((data) => {
             setMovieDetail(data);
             getMovieCredits(id)
+            getMovieReviews(id)
         })
     }
 
@@ -28,6 +31,14 @@ const MovieDetail = () => {
     const getMovieCredits = (id) => {
         fetch('movies/movie-credits?id=' + id).then((response) => response.json()).then((data) => {
             setMovieCredits(data);
+        })
+    }
+
+    const getMovieReviews = (id) => {
+        fetch('movies/movie-reviews?id=' + id + '&page=' + movieReviewPage).then((response) => response.json()).then((data) => {
+            setMovieReviewPage(data.total_pages > movieReviewPage ? movieReviewPage++ : movieReviewPage);
+            data["results"] = movieReviews["results"] ? movieReviews["results"].concat(...data.results) : data.results
+            setMovieReviews(data);
         })
     }
 
@@ -84,7 +95,23 @@ const MovieDetail = () => {
                                 )}
                             </div>
                         </div>
+                        <div className="col-12">
+                            <h3 className="mt-3">Reviews</h3>
+                            <div className="row">
+                                {movieReviews.results && movieReviews.results.map((movieReview, index) =>
 
+                                    <div class="col-md-3 p-1" key={index}>
+                                        <div class="card h-100">
+                                            <div class="card-body">
+                                                <h5 class="card-title">{movieReview.author}</h5>
+                                                <p class="card-text" title={movieReview.content}>{movieReview.content.slice(0, 100)}. . .</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+                            <button className="btn btn-info" hidden={movieReviews.total_pages == movieReviewPage}>Load More</button>
+                        </div>
                     </div>
                 </div>
             </div>
