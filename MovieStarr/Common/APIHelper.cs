@@ -25,7 +25,7 @@ namespace MovieStarr.Common
         {
             MovieModel res = new MovieModel();
 
-            var options = new RestClientOptions("https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1");
+            var options = new RestClientOptions("https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1&region=in");
             var client = new RestClient(options);
             var request = new RestRequest("");
             request.AddHeader("accept", "application/json");
@@ -124,6 +124,32 @@ namespace MovieStarr.Common
             return res.results;
         }
 
+        public MovieCreditModel GetMovieCredits(int id)
+        {
+            var options = new RestClientOptions("https://api.themoviedb.org/3/movie/" + id + "/credits");
+            var client = new RestClient(options);
+            var request = new RestRequest("");
+            request.AddHeader("accept", "application/json");
+            request.AddHeader("Authorization", "Bearer " + token);
+            var response = client.Get(request);
+
+            var res = JsonConvert.DeserializeObject<MovieCreditModel>(response.Content);
+            return res;
+        }
+
+        public MovieReviewModel GetMovieReviews(int id, int page)
+        {
+            var options = new RestClientOptions("https://api.themoviedb.org/3/movie/" + id + "/reviews?page=" + page);
+            var client = new RestClient(options);
+            var request = new RestRequest("");
+            request.AddHeader("accept", "application/json");
+            request.AddHeader("Authorization", "Bearer " + token);
+            var response = client.Get(request);
+
+            var res = JsonConvert.DeserializeObject<MovieReviewModel>(response.Content);
+            return res;
+        }
+
 
 
 
@@ -204,10 +230,11 @@ namespace MovieStarr.Common
 
             try
             {
-            res = JsonConvert.DeserializeObject<TVDetails>(response.Content);
+                res = JsonConvert.DeserializeObject<TVDetails>(response.Content);
             }
-            catch(Exception ex) { 
-            string s=ex.Message;
+            catch (Exception ex)
+            {
+                string s = ex.Message;
             }
             return res;
         }

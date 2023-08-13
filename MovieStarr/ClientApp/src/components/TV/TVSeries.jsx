@@ -1,6 +1,7 @@
 ﻿import React, { useEffect, useState } from 'react';
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry"
 import { useNavigate } from 'react-router-dom';
+import TVSeriesItem from './TVSeriesItem';
 
 
 const TVSeries = () => {
@@ -81,26 +82,7 @@ const TVSeries = () => {
                 <Masonry>
 
                     {series.map(seriesItem =>
-                        <a className="grid-item m-1 text-decoration-none" href={"/tv-detail/" + seriesItem.id} key={seriesItem.id}>
-                            <div className="card" >
-                                <div className="card-body">
-                                    <img className="card-img-top" src={"http://image.tmdb.org/t/p/w500/" + seriesItem.poster_path} />
-                                    <h5 className="card-title mt-2">{seriesItem.name}</h5>
-                                    <span className="text-muted" style={{ float: "right" }}> {seriesItem.adult ? "A" : "U/A"}</span>
-                                    <span> {seriesItem.release_date}</span>
-                                    <p className="card-text text-muted">{seriesItem.overview}</p>
-                                    <div>
-                                        {lstGenre.length && seriesItem.genre_ids.map(genre =>
-                                            <strong class="badge text-success border border-success mx-1">{lstGenre.find(x => x.id == genre)["name"]}</strong>
-                                        )}
-                                    </div>
-                                    <span className="card-text">{seriesItem.vote_count} Votes</span>
-                                    <div class="progress" style={{ height: "5px" }} >
-                                        <div class="progress-bar" role="progressbar" style={{ width: seriesItem.vote_average * 10 + "%" }} aria-valuenow={seriesItem.vote_average} aria-valuemin="0" aria-valuemax="10"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
+                        <TVSeriesItem seriesItem={seriesItem} lstGenre={lstGenre} />
                     )}
                 </Masonry>
             </ResponsiveMasonry>

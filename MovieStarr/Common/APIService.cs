@@ -12,6 +12,8 @@ namespace MovieStarr.Common
         MovieModel GetTopRated();
         MovieDetails GetMovieDetails(int id);
         List<MovieVideos> GetMovieVideos(int id);
+        MovieCreditModel GetMovieCredits(int id);
+        MovieReviewModel GetMovieReviews(int id,int page);
 
 
         //For TV-Series
