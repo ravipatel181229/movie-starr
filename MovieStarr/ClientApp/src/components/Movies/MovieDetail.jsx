@@ -48,7 +48,7 @@ const MovieDetail = () => {
 
     return (
         <>
-            <div className="card transparent-bg">
+            <div className="card transparent-bg text-white">
                 <div className="card-body">
                     <div className="row">
                         <div className="col-lg-5 col-md-5 col-sm-6">
@@ -93,7 +93,7 @@ const MovieDetail = () => {
                                                         <img src={blankProfile} className="img-fluid" />
                                                 }
                                                 <h6>{movieCast.name} ({movieCast.known_for_department})</h6>
-                                                <strong className="text-muted">{movieCast.character}</strong>
+                                                <strong className="text-info">{movieCast.character}</strong>
                                             </div>
                                         </> : <></>
                                 )}
@@ -105,7 +105,7 @@ const MovieDetail = () => {
                                 {movieReviews.results && movieReviews.results.map((movieReview, index) =>
 
                                     <div class="col-md-3 p-1" key={index}>
-                                        <div class="card h-100">
+                                        <div class="card h-100 transparent-bg">
                                             <div class="card-body">
                                                 <h5 class="card-title">{movieReview.author}</h5>
                                                 <p class="card-text" title={movieReview.content}>{movieReview.content.slice(0, 100)}. . .</p>

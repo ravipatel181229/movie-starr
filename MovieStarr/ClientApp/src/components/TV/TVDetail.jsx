@@ -13,6 +13,8 @@ const TVDetail = () => {
 
     const gettvDetails = (id) => {
         fetch('tv-series/tv-details?id=' + id).then((response) => response.json()).then((data) => {
+            document.body.style.background = "url(http://image.tmdb.org/t/p/w1280/" + data.backdrop_path + ")";
+            document.body.style.backgroundSize = "cover";
             setTvDetail(data);
             //getMovieVideos(id)
         })
@@ -26,7 +28,7 @@ const TVDetail = () => {
 
     return (
         <>
-            <div className="card">
+            <div className="card transparent-bg">
                 <div className="card-body">
                     <div className="row">
                         <div className="col-lg-5 col-md-5 col-sm-6">
