@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MovieStarr.Common;
 using MovieStarr.Models.Movies;
+using static Humanizer.On;
 
 namespace MovieStarr.Controllers
 {
@@ -92,6 +93,15 @@ namespace MovieStarr.Controllers
             int id = Convert.ToInt32(HttpContext.Request.Query["id"]);
             int page = Convert.ToInt32(HttpContext.Request.Query["page"]);
             MovieReviewModel res = _apiService.GetMovieReviews(id, page);
+            return res;
+        }
+
+        [HttpGet]
+        [Route("search")]
+        public IEnumerable<MoviesList> Search()
+        {
+            string search = HttpContext.Request.Query["query"].ToString();
+            List<MoviesList> res = _apiService.SearchMovies(search).results;
             return res;
         }
     }
