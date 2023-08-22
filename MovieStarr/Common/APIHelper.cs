@@ -21,11 +21,11 @@ namespace MovieStarr.Common
             token = _secrets.TMDBToken;
         }
 
-        public MovieModel GetNowPlaying()
+        public MovieModel GetNowPlaying(string region)
         {
             MovieModel res = new MovieModel();
 
-            var options = new RestClientOptions("https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1&region=in");
+            var options = new RestClientOptions("https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1&region="+region);
             var client = new RestClient(options);
             var request = new RestRequest("");
             request.AddHeader("accept", "application/json");
@@ -51,11 +51,11 @@ namespace MovieStarr.Common
             return result.genres;
         }
 
-        public MovieModel GetUpcoming()
+        public MovieModel GetUpcoming(string region)
         {
             MovieModel res = new MovieModel();
 
-            var options = new RestClientOptions("https://api.themoviedb.org/3/movie/upcoming");
+            var options = new RestClientOptions("https://api.themoviedb.org/3/movie/upcoming?region=" + region);
             var client = new RestClient(options);
             var request = new RestRequest("");
             request.AddHeader("accept", "application/json");
@@ -66,11 +66,11 @@ namespace MovieStarr.Common
             return res;
         }
 
-        public MovieModel GetPopular()
+        public MovieModel GetPopular(string region)
         {
             MovieModel res = new MovieModel();
 
-            var options = new RestClientOptions("https://api.themoviedb.org/3/movie/popular");
+            var options = new RestClientOptions("https://api.themoviedb.org/3/movie/popular?region=" + region);
             var client = new RestClient(options);
             var request = new RestRequest("");
             request.AddHeader("accept", "application/json");
@@ -81,11 +81,11 @@ namespace MovieStarr.Common
             return res;
         }
 
-        public MovieModel GetTopRated()
+        public MovieModel GetTopRated(string region)
         {
             MovieModel res = new MovieModel();
 
-            var options = new RestClientOptions("https://api.themoviedb.org/3/movie/top_rated");
+            var options = new RestClientOptions("https://api.themoviedb.org/3/movie/top_rated?region=" + region);
             var client = new RestClient(options);
             var request = new RestRequest("");
             request.AddHeader("accept", "application/json");
@@ -161,6 +161,32 @@ namespace MovieStarr.Common
 
             var res = JsonConvert.DeserializeObject<MovieModel>(response.Content);
             return res;
+        }
+
+        public MovieModel SimilarMovies(int id)
+        {
+            var options = new RestClientOptions($"https://api.themoviedb.org/3/movie/{id}/similar?page=1");
+            var client = new RestClient(options);
+            var request = new RestRequest("");
+            request.AddHeader("accept", "application/json");
+            request.AddHeader("Authorization", "Bearer " + token);
+            var response = client.Get(request);
+
+            var res = JsonConvert.DeserializeObject<MovieModel>(response.Content);
+            return res;
+        }
+
+        public List<Region> RegionList()
+        {
+            var options = new RestClientOptions($"https://api.themoviedb.org/3/watch/providers/regions");
+            var client = new RestClient(options);
+            var request = new RestRequest("");
+            request.AddHeader("accept", "application/json");
+            request.AddHeader("Authorization", "Bearer " + token);
+            var response = client.Get(request);
+
+            var res = JsonConvert.DeserializeObject<RegionModel>(response.Content);
+            return res.results;
         }
 
 

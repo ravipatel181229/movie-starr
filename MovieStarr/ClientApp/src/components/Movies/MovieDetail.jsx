@@ -7,6 +7,7 @@ const MovieDetail = () => {
     const [movieDetail, setMovieDetail] = useState({})
     const [movieVideos, setMovieVideos] = useState([])
     const [movieCredits, setMovieCredits] = useState([])
+    const [similarMovies, setSimilarMovies] = useState([])
     const [movieReviews, setMovieReviews] = useState({})
     const [movieReviewPage, setMovieReviewPage] = useState(1)
 
@@ -22,7 +23,7 @@ const MovieDetail = () => {
             setMovieDetail(data);
             getMovieCredits(id)
             getMovieReviews(id)
-
+            getSimilarMovies(id)
         })
     }
 
@@ -43,6 +44,11 @@ const MovieDetail = () => {
             setMovieReviewPage(data.total_pages > movieReviewPage ? movieReviewPage++ : movieReviewPage);
             data["results"] = movieReviews["results"] ? movieReviews["results"].concat(...data.results) : data.results
             setMovieReviews(data);
+        })
+    }
+    const getSimilarMovies = (id) => {
+        fetch('movies/similar?id=' + id).then((response) => response.json()).then((data) => {
+            setSimilarMovies(data);
         })
     }
 
@@ -99,23 +105,42 @@ const MovieDetail = () => {
                                 )}
                             </div>
                         </div>
-                        <div className="col-12">
-                            <h3 className="mt-3">Reviews</h3>
-                            <div className="row">
-                                {movieReviews.results && movieReviews.results.map((movieReview, index) =>
+                        {movieReviews.results && movieReviews.results.length>0 &&
+                            <div className="col-12">
+                                <h3 className="mt-3">Reviews</h3>
+                                <div className="row">
+                                    {movieReviews.results.map((movieReview, index) =>
 
-                                    <div class="col-md-3 p-1" key={index}>
-                                        <div class="card h-100 transparent-bg">
-                                            <div class="card-body">
-                                                <h5 class="card-title">{movieReview.author}</h5>
-                                                <p class="card-text" title={movieReview.content}>{movieReview.content.slice(0, 100)}. . .</p>
+                                        <div class="col-md-3 p-1" key={index}>
+                                            <div class="card h-100 transparent-bg">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">{movieReview.author}</h5>
+                                                    <p class="card-text" title={movieReview.content}>{movieReview.content.slice(0, 100)}. . .</p>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                )}
+                                    )}
+                                </div>
+                                <button className="btn btn-info" hidden={movieReviews.total_pages == movieReviewPage}>Load More</button>
                             </div>
-                            <button className="btn btn-info" hidden={movieReviews.total_pages == movieReviewPage}>Load More</button>
-                        </div>
+                        }
+                        {similarMovies.length > 0 &&
+                            <div className="col-12">
+                                <h3 className="mt-3">Similar Movies</h3>
+                                <div className="row">
+                                    {similarMovies.map((movieItem, index) =>
+
+                                        <div className="col-lg-2 col-md-3 col-6 p-1">
+                                            <a className="grid-item m-1 text-decoration-none" href={"/movie-detail/" + movieItem.id} key={movieItem.id}>
+                                                <img src={"http://image.tmdb.org/t/p/w500/" + movieItem.poster_path} className="img-fluid rounded" />
+                                                <h6 className="mt-2 text-white">{movieItem.title} </h6>
+                                                <strong className="text-info">{movieItem.release_date}</strong>
+                                            </a>
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                        }
                     </div>
                 </div>
             </div>

@@ -22,7 +22,8 @@ namespace MovieStarr.Controllers
         [HttpGet]
         public IEnumerable<MoviesList> Index()
         {
-            List<MoviesList> res = _apiService.GetNowPlaying().results;
+            string region = HttpContext.Request.Query["region"].ToString();
+            List<MoviesList> res = _apiService.GetNowPlaying(region).results;
             return res.ToArray();
         }
 
@@ -39,7 +40,8 @@ namespace MovieStarr.Controllers
         [Route("upcoming")]
         public IEnumerable<MoviesList> Upcoming()
         {
-            List<MoviesList> res = _apiService.GetUpcoming().results;
+            string region = HttpContext.Request.Query["region"].ToString();
+            List<MoviesList> res = _apiService.GetUpcoming(region).results;
             return res.ToArray();
         }
 
@@ -47,7 +49,8 @@ namespace MovieStarr.Controllers
         [Route("popular")]
         public IEnumerable<MoviesList> Popular()
         {
-            List<MoviesList> res = _apiService.GetPopular().results;
+            string region = HttpContext.Request.Query["region"].ToString();
+            List<MoviesList> res = _apiService.GetPopular(region).results;
             return res.ToArray();
         }
 
@@ -55,7 +58,8 @@ namespace MovieStarr.Controllers
         [Route("top-rated")]
         public IEnumerable<MoviesList> TopRated()
         {
-            List<MoviesList> res = _apiService.GetTopRated().results;
+            string region = HttpContext.Request.Query["region"].ToString();
+            List<MoviesList> res = _apiService.GetTopRated(region).results;
             return res.ToArray();
         }
 
@@ -102,6 +106,23 @@ namespace MovieStarr.Controllers
         {
             string search = HttpContext.Request.Query["query"].ToString();
             List<MoviesList> res = _apiService.SearchMovies(search).results;
+            return res;
+        }
+
+        [HttpGet]
+        [Route("similar")]
+        public IEnumerable<MoviesList> Similar()
+        {
+            int id = Convert.ToInt32(HttpContext.Request.Query["id"]);
+            List<MoviesList> res = _apiService.SimilarMovies(id).results;
+            return res;
+        }
+
+        [HttpGet]
+        [Route("region-list")]
+        public IEnumerable<Region> RegionList()
+        {
+            List<Region> res = _apiService.RegionList();
             return res;
         }
     }

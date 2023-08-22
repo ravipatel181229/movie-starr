@@ -7,6 +7,8 @@ import MovieItem from './MovieItem';
 const Home = () => {
     const [movies, setMovies] = useState([])
     const [lstGenre, setLstGenre] = useState([])
+    const [lstRegion, setLstRegion] = useState([])
+    const [region, setRegion] = useState("IN")
     const [activeTab, setActiveTab] = useState("NOW_PLAYING")
     const { navigate } = useNavigate()
 
@@ -19,6 +21,7 @@ const Home = () => {
     useEffect(() => {
         getGenreList();
         nowPlayingMoviesData()
+        regionList();
     }, [])
 
     const getGenreList = () => {
@@ -33,29 +36,35 @@ const Home = () => {
     const nowPlayingMoviesData = () => {
         setActiveTab("NOW_PLAYING")
         //const token = await authService.getAccessToken()
-        fetch('movies').then((response) => response.json()).then((data) => {
+        fetch('movies?region=' + region).then((response) => response.json()).then((data) => {
             setMovies(data);
         })
     }
 
     const upcomingMovies = () => {
         setActiveTab("UPCOMING")
-        fetch('movies/upcoming').then((response) => response.json()).then((data) => {
+        fetch('movies/upcoming?region=' + region).then((response) => response.json()).then((data) => {
             setMovies(data);
         })
     }
 
     const popularMovies = () => {
         setActiveTab("POPULAR")
-        fetch('movies/popular').then((response) => response.json()).then((data) => {
+        fetch('movies/popular?region=' + region).then((response) => response.json()).then((data) => {
             setMovies(data);
         })
     }
 
     const topRatedMovies = () => {
         setActiveTab("TOP_RATED")
-        fetch('movies/top-rated').then((response) => response.json()).then((data) => {
+        fetch('movies/top-rated?region=' + region).then((response) => response.json()).then((data) => {
             setMovies(data);
+        })
+    }
+
+    const regionList = () => {
+        fetch('movies/region-list').then((response) => response.json()).then((data) => {
+            setLstRegion(data);
         })
     }
 
@@ -64,7 +73,7 @@ const Home = () => {
         if (searchStr)
             searchMovies(searchStr)
         else
-            nowPlayingMoviesData()
+            getMovies();
     }
 
     const searchMovies = (search) => {
@@ -73,12 +82,49 @@ const Home = () => {
         })
     }
 
+    const onRegionSelect = (e) => {
+        setRegion(e.currentTarget.value)
+    }
+
+    const getMovies = () => {
+        switch (activeTab) {
+            case "NOW_PLAYING":
+                nowPlayingMoviesData();
+                break;
+            case "UPCOMING":
+                upcomingMovies();
+                break;
+            case "POPULAR":
+                popularMovies();
+                break;
+            case "TOP_RATED":
+                topRatedMovies();
+                break;
+            default:
+                nowPlayingMoviesData();
+                break;
+        }
+    }
+
+    useEffect(() => {
+        getMovies();
+    }, [region])
 
     return (
         <>
-            <div class="input-group mb-3">
-                <input type="text" class="form-control"
-                    placeholder="Search Movies..." onChange={onSearchInputChange} />
+            <div class="input-group mb-3 row">
+                <div className="col-12 col-sm-8">
+                    <input type="text" class="form-control form-control-lg"
+                        placeholder="Search Movies..." onChange={onSearchInputChange} />
+                </div>
+                <div className="col-12 col-sm-4">
+                    <select className="form-control form-control-lg" onChange={onRegionSelect}>
+                        <option>Select Region</option>
+                        {lstRegion.length > 0 && lstRegion.map(region =>
+                            <option value={region.iso_3166_1} key={region.iso_3166_1}>{region.native_name}</option>
+                        )}
+                    </select>
+                </div>
                 {/*<span class="input-group-text" id="basic-addon2">@example.com</span>*/}
             </div>
             <ul className="nav justify-content-end">
