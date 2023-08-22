@@ -57,5 +57,12 @@ namespace MovieStarr.Controllers
             TVDetails res = _apiService.GetTVDetails(id);
             return res;
         }
+
+        [Route("search")]
+        public IEnumerable<TVSeries> Search()
+        {
+            string search = HttpContext.Request.Query["query"].ToString();
+            return _apiService.SearchSeries(search);
+        }
     }
 }

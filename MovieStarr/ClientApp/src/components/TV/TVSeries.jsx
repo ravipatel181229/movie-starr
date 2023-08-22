@@ -59,9 +59,28 @@ const TVSeries = () => {
         })
     }
 
+    const onSearchInputChange = (e) => {
+        let searchStr = e.currentTarget.value;
+        if (searchStr)
+            searchSeries(searchStr)
+        else
+            nowPlayingSeriesData()
+    }
+
+    const searchSeries = (search) => {
+        fetch('tv-series/search?query=' + search).then((response) => response.json()).then((data) => {
+            setSeries(data);
+        })
+    }
+
 
     return (
         <>
+            <div class="input-group mb-3">
+                <input type="text" class="form-control"
+                    placeholder="Search Series..." onChange={onSearchInputChange} />
+                {/*<span class="input-group-text" id="basic-addon2">@example.com</span>*/}
+            </div>
             <ul className="nav justify-content-end">
                 <li className="nav-item">
                     <a className={"nav-link btn" + (activeTab == "ON_THE_AIR" ? " active" : "")} onClick={nowPlayingSeriesData} >On The Air</a>

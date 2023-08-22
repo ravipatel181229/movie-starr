@@ -24,5 +24,6 @@ namespace MovieStarr.Common
         List<TVSeries> GetTopRatedSeries();
         List<Genre> GetAllSeriesGenre();
         TVDetails GetTVDetails(int id);
+        List<TVSeries> SearchSeries(string search);
     }
 }
