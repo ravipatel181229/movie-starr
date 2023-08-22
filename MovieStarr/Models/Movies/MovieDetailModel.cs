@@ -1,5 +1,13 @@
 ﻿namespace MovieStarr.Models.Movies
 {
+    public class BelongsToCollection
+    {
+        public int id { get; set; }
+        public string name { get; set; }
+        public string poster_path { get; set; }
+        public string backdrop_path { get; set; }
+    }
+
     public class ProductionCompany
     {
         public int id { get; set; }
@@ -18,7 +26,7 @@
     {
         public bool adult { get; set; }
         public string backdrop_path { get; set; }
-        public object belongs_to_collection { get; set; }
+        public BelongsToCollection belongs_to_collection { get; set; }
         public int budget { get; set; }
         public List<Genre> genres { get; set; }
         public string homepage { get; set; }
@@ -32,7 +40,7 @@
         public List<ProductionCompany> production_companies { get; set; }
         public List<ProductionCountry> production_countries { get; set; }
         public string release_date { get; set; }
-        public int revenue { get; set; }
+        public long revenue { get; set; }
         public int runtime { get; set; }
         public List<SpokenLanguage> spoken_languages { get; set; }
         public string status { get; set; }

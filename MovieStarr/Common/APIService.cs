@@ -14,6 +14,7 @@ namespace MovieStarr.Common
         List<MovieVideos> GetMovieVideos(int id);
         MovieCreditModel GetMovieCredits(int id);
         MovieReviewModel GetMovieReviews(int id,int page);
+        MovieModel SearchMovies(string search);
 
 
         //For TV-Series
@@ -23,5 +24,6 @@ namespace MovieStarr.Common
         List<TVSeries> GetTopRatedSeries();
         List<Genre> GetAllSeriesGenre();
         TVDetails GetTVDetails(int id);
+        List<TVSeries> SearchSeries(string search);
     }
 }

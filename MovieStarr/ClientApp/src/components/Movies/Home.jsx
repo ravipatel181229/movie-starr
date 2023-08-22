@@ -59,9 +59,28 @@ const Home = () => {
         })
     }
 
+    const onSearchInputChange = (e) => {
+        let searchStr = e.currentTarget.value;
+        if (searchStr)
+            searchMovies(searchStr)
+        else
+            nowPlayingMoviesData()
+    }
+
+    const searchMovies = (search) => {
+        fetch('movies/search?query=' + search).then((response) => response.json()).then((data) => {
+            setMovies(data);
+        })
+    }
+
 
     return (
         <>
+            <div class="input-group mb-3">
+                <input type="text" class="form-control"
+                    placeholder="Search Movies..." onChange={onSearchInputChange} />
+                {/*<span class="input-group-text" id="basic-addon2">@example.com</span>*/}
+            </div>
             <ul className="nav justify-content-end">
                 <li className="nav-item">
                     <a className={"nav-link btn" + (activeTab == "NOW_PLAYING" ? " active" : "")} onClick={nowPlayingMoviesData} >Now Playing</a>

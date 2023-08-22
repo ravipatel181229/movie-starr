@@ -1,4 +1,15 @@
 ﻿import React from 'react';
+import Star from 'star-rating-react-component';
+
+
+const options = {
+    name: 'custom',
+    starsWidth: 40,
+    color: "#ffffff",
+    bgColor: " #e6e6e6",
+    borderColor: "orange",
+    scoreColor: "inherit"
+}
 
 const MovieItem = (props) => {
     return (
@@ -11,15 +22,20 @@ const MovieItem = (props) => {
                         <span className="" style={{ float: "right" }}> {props.movie.adult ? "A" : "U/A"}</span>
                         <span> {props.movie.release_date}</span>
                         <p className="card-text">{props.movie.overview}</p>
-                        <div>
+                        <div className="mb-2">
                             {props.lstGenre.length && props.movie.genre_ids.map(genre =>
-                                <strong class="badge text-success border border-success mx-1">{props.lstGenre.find(x => x.id == genre)["name"]}</strong>
+                                <strong class="badge text-success border border-success me-1">{props.lstGenre.find(x => x.id == genre)["name"]}</strong>
                             )}
                         </div>
                         <span className="card-text">{props.movie.vote_count} Votes</span>
-                        <div class="progress" style={{ height: "5px" }} >
-                            <div class="progress-bar" role="progressbar" style={{ width: props.movie.vote_average * 10 + "%" }} aria-valuenow={props.movie.vote_average} aria-valuemin="0" aria-valuemax="10"></div>
-                        </div>
+                        <Star options={{
+                            name: 'custom',
+                            starsWidth: 20,
+                            numOfStars: props.movie.vote_average,
+                            color: "#ffffff",
+                            bgColor: props.movie.vote_average > 7 ? "#198754" : props.movie.vote_average >= 5 ? "#fd7e14" : "#dc3545",
+                            scoreColor: "inherit"
+                        }} />
                     </div>
                 </div>
             </a>

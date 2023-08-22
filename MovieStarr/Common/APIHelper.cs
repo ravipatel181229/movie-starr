@@ -150,6 +150,19 @@ namespace MovieStarr.Common
             return res;
         }
 
+        public MovieModel SearchMovies(string search)
+        {
+            var options = new RestClientOptions("https://api.themoviedb.org/3/search/movie?query=" + search);
+            var client = new RestClient(options);
+            var request = new RestRequest("");
+            request.AddHeader("accept", "application/json");
+            request.AddHeader("Authorization", "Bearer " + token);
+            var response = client.Get(request);
+
+            var res = JsonConvert.DeserializeObject<MovieModel>(response.Content);
+            return res;
+        }
+
 
 
 
@@ -237,6 +250,18 @@ namespace MovieStarr.Common
                 string s = ex.Message;
             }
             return res;
+        }
+        public List<TVSeries> SearchSeries(string search)
+        {
+            var options = new RestClientOptions("https://api.themoviedb.org/3/search/tv?query=" + search);
+            var client = new RestClient(options);
+            var request = new RestRequest("");
+            request.AddHeader("accept", "application/json");
+            request.AddHeader("Authorization", "Bearer " + token);
+            var response = client.Get(request);
+
+            var res = JsonConvert.DeserializeObject<TVSeriesModel>(response.Content);
+            return res.results;
         }
     }
 }
